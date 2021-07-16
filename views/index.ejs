@@ -4,15 +4,152 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hall Bokking Application</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
+
+
+
+
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to our Hall Booking Application</h1>
+        <p class="lead">This application will demonstrate the basics way how a Hall booking application works in backend</p>
+        <hr class="my-4">
+        <p>Login if you already have an account or sign up for a new account</p>
+        <p class="lead">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginModal" id="showmodal">User Login</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SignupModal" id="showmodal">User Signup</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#StaffLoginModal" id="showmodal">Staff Login</button>
+        </p>
+        
+          <% if(typeof message != 'undefined') { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="message">
+              <strong>Signup failed!!!</strong><br><%= message %> 
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>
+
+        <% if(typeof message1 != 'undefined') { %>
+          <div class="alert alert-success alert-dismissible fade show" role="alert" id="message1">
+            <strong>Signup successfull!!!</strong><br><%= message1 %> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      <% } %>
+
+      <% if(typeof message2 != 'undefined') { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="message2">
+          <strong>Login failed!!!</strong><br><%= message2 %> 
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+        
+      </div>
+
+
+      <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">User Login </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="form" action="/login" method="POST">
+                  <input type="text" class="form-control" id="Username" name="username" placeholder="Username" required><br>
+                  <input type="password" class="form-control" id="login Password" name="password" placeholder="Password" required><br>
+                  <input type="submit" class="btn btn-info"  id="Login" value="Login">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <p>Didn't have an account?</p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SignupModal" data-dismiss="modal">Sign up</button>
+            </div>
+          </div>          
+        </div>
+      </div>
+      
+      <div class="modal fade" id="SignupModal" tabindex="-1" role="dialog"  aria-hidden="true" >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">User Signup </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="form" action="/signup" method="POST" name="form" >
+                  <input type="text" class="form-control" id="Username" name="username" placeholder="Username" required><br>
+                  <div class="row">
+                      <div class="col">
+                        <input type="text"  class="form-control" id="Firstname" name="firstname" placeholder="Firstname" required><br>
+                      </div>
+                    
+                      <div class="col">
+                        <input type="text"  class="form-control" id="Lastname" name="lastname" placeholder="Lastname" required><br>
+                      </div>
+                  </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <input type="email"  class="form-control" id="Email" name="email" placeholder="Email" required><br>
+                      </div>
+                      <div class="col">
+                        <input type="tel"  class="form-control" id="Phone" name="phone" placeholder="Phone number" required><br>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <input type="password"  class="form-control" id="Password" name="password" placeholder="Password" required><br>
+                    </div>
+                    <div class="col">
+                      <input type="text"  class="form-control" id="c_Password" name="c_password" placeholder="Confirm Password" required><br>
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input mr-4" id="check" name="Check"required>
+                  <label class="form-label" for="Check">By signing up you agree to our <a href="#">Terms and Conditions</a></label>
+                  <br>
+                </div>
+                  <input type="submit" class="btn btn-info" id="Login" value="Sign Up">
+              </form>
+
+            </div>
+            <div class="modal-footer">
+              <p>Already have an account?</p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginModal" id="showmodal" data-dismiss="modal">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="StaffLoginModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Staff Login</h5><strong class="text-danger">(This is strictly for staffs only)</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="form" action="/staflogin" method="POST">
+                  <input type="number" class="form-control" id="staff_id" name="id" placeholder="Staff ID" required><br>
+                  <input type="password" class="form-control" id="staf_Password" name="password" placeholder="Password" required><br>
+                  <input type="submit" class="btn btn-info"  id="Login" value="Login">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <p class="text-danger">Connect higher authorities if you lost account or forgot password</p>
+            </div>
+          </div>          
+        </div>
+      </div>
     
 
     <script src="jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
