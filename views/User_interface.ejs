@@ -23,14 +23,110 @@
           <p class="lead">Enjoy the wide variety of services we provide</p>
         </div>
         <p class="lead">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginModal" id="showmodal">Book a room</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SignupModal" id="showmodal">Check room status</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#StaffLoginModal" id="showmodal">Send Feedback</button>
+            <button type="button" class="btn btn-primary"  id="showbookroom">Book a room</button>
+            <button type="button" class="btn btn-primary"  id="buttoncheck">Check room status</button>
+            <button type="button" class="btn btn-primary"  id="buttonfeedback">Send Feedback</button>
         </p>
         <form action="/logout" method="GET">
           <button type="submit" class="btn btn-danger align-self-center" >Logout</button>
         </form><br><br>
+
+        <% if(typeof message1 != 'undefined') { %>
+          <div class="alert alert-success alert-dismissible fade show" role="alert" id="message">
+            <%= message1 %> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      <% } %>
+      <% if(typeof message2 != 'undefined') { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="message">
+          <%= message2 %> 
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+
       </div>
+
+
+      <div class="container" id="bookroom">
+        <form class="form" action="/userbookroom" method="POST">
+          <h1 class="display-4">Book a room</h1> 
+          <strong class="text-danger">***Room is booked for a whole day and is charged for 12 hours only***</strong>
+          <hr>
+          <div class="row">
+            <div class="form-group col-4">
+                <label class="form-label" for="c_name">Name</label>
+                <input type="text" class="form-control" name="c_name" id="name" placeholder="Name" required>
+            </div>
+            <div class="form-group col-4">
+                <label class="form-label" for="c_phone">Phone number</label>
+                <input type="text" class="form-control" name="c_phone" id="c_phone" placeholder="Phone number" required>
+            </div>
+        </div><br>
+        <div class="row">
+          <div class="form-group col-4">
+              <label class="form-label" for="email">Email</label> 
+              <input type="email" class="form-control" name="c_email" id="c_email" placeholder="Email" required>
+          </div>
+          <div class="form-group col-4">
+              <label class="form-label" for="r_number">Room number</label>
+              <input type="text" class="form-control" name="r_number" id="r_number" placeholder="Room number" required>
+              <strong class="text-danger">***Please check the room status first before booking***</strong>
+          </div>
+          <div class="form-group col-4">
+            <label class="form-label" for="date">Date</label>
+            <input type="date" class="form-control" name="date" id="date" required>
+        </div>
+      </div><br>
+      
+        
+          <input type="submit" class="btn btn-success" id="" value="Book room">
+      </form>
+    </div>
+  
+  
+    <div class="container" id="checkroom">
+      <form class="form" action="/usercheckroom" method="POST">
+        <h1 class="display-4">Check for a room</h1>
+       
+        <hr>
+        <div class="row">
+          <div class="form-group col-4">
+              <label class="form-label" for="seats">No. of seats</label>
+              <input type="number" class="form-control" name="seats" id="seats" placeholder="Number of seats">
+          </div>
+          <div class="form-group col-4">
+            <label class="form-label" for="date">date</label>
+            <input type="date" class="form-control" name="date" id="date" required>
+        </div>
+  
+      </div><br>
+        <input type="submit" class="btn btn-success" id="Login" value="Check room">
+    </form>
+  </div>
+
+
+  <div class="container" id="sendfeedback">
+    <form class="form" action="/sendfeedback" method="POST">
+      <h1 class="display-4">Type your feedback</h1>
+     
+      <hr>
+      <div class="row">
+        <div class="form-group col-8">
+            
+            <textarea class="form-control" name="message" id="message" placeholder="Type here....." style="height:200px" required></textarea>
+        </div>
+        <div class="col-sm">
+  
+        </div>
+       
+  
+    </div><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-success" id="feedback" value="Send Feedback">
+  </form>
+  </div>
 
 
     <script src="jquery-3.6.0.min.js"></script>
@@ -38,7 +134,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>  
     <script>
-        $()
-    </script>  
+      $("#createroom").hide();
+      $("#bookroom").hide();
+      $("#checkroom").hide();
+      $("#sendfeedback").hide();
+
+      $(document).ready(function(){
+          $("#showcreateroom").click(function(){
+              $("#bookroom").hide();
+              $("#checkroom").hide();
+              $("#sendfeedback").hide();
+              $("#createroom").toggle(2000);
+          })
+
+          $("#showbookroom").click(function(){
+            $("#createroom").hide(); 
+             $("#checkroom").hide();
+             $("#sendfeedback").hide();
+            $("#bookroom").toggle();
+          })
+
+          $("#buttoncheck").click(function(){
+            $("#createroom").hide(); 
+             $("#bookroom").hide();
+             $("#sendfeedback").hide();
+            $("#checkroom").toggle();
+          })
+
+          $("#buttonfeedback").click(function(){
+            $("#createroom").hide(); 
+             $("#bookroom").hide();
+            $("#checkroom").hide();
+            $("#sendfeedback").toggle();
+          })
+})
+  </script>
 </body>
 </html>

@@ -10,11 +10,15 @@
     margin-left:20%;
 }
 
-#createroom, #bookroom, #checkroom{
+#createroom, #bookroom, #checkroom, #sendfeedback{
     background-color:rgb(143, 209, 209);
     margin-top:5%;
     margin-bottom:5%;
     padding:10px;
     border-style: dotted;
     border-color: black;
+}
+
+textarea{
+    margin: 0px;
 }
